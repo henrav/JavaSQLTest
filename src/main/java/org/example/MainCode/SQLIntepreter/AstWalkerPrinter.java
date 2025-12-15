@@ -2,6 +2,8 @@ package org.example.MainCode.SQLIntepreter;
 
 import org.example.MainCode.SQLIntepreter.DataTypes.DataTypeNode;
 import org.example.MainCode.SQLIntepreter.Expression.*;
+import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.AdditionExpressionNode;
+import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.SubtractionExpressionNode;
 import org.example.MainCode.SQLIntepreter.Statements.SelectStatement;
 import org.example.MainCode.SQLIntepreter.clauses.FromClause;
 import org.example.MainCode.SQLIntepreter.clauses.SelectClause;
@@ -58,8 +60,14 @@ public class AstWalkerPrinter implements AstVisitor{
         return null;
     }
 
-    @Override
-    public void visitExpressionNode(ExpressionNode expressionNode) {
 
+    @Override
+    public Object visitAdditionExpressionNode(AdditionExpressionNode additionExpressionNode) {
+        return null;
+    }
+
+    @Override
+    public Object visitSubtractionExpressionNode(SubtractionExpressionNode subtractionExpressionNode) {
+        return null;
     }
 }

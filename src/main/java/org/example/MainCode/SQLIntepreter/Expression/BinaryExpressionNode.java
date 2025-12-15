@@ -1,13 +1,15 @@
 package org.example.MainCode.SQLIntepreter.Expression;
 
 import org.example.MainCode.SQLIntepreter.AstVisitor;
+import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.OperatorExpressionNode;
 
-public class BinaryExpressionNode implements ExpressionNode {
-    private final ExpressionNode left;
-    private final String operator;
-    private final ExpressionNode right;
+public class BinaryExpressionNode extends ExpressionNode {
 
-    public BinaryExpressionNode(ExpressionNode left, String operator, ExpressionNode right) {
+    private  ExpressionNode left;
+    private  OperatorExpressionNode operator;
+    private  ExpressionNode right;
+
+    public BinaryExpressionNode(ExpressionNode left, OperatorExpressionNode operator, ExpressionNode right) {
         this.left = left;
         this.operator = operator;
         this.right = right;
@@ -22,11 +24,24 @@ public class BinaryExpressionNode implements ExpressionNode {
         return left;
     }
 
-    public String getOperator() {
+    public OperatorExpressionNode getOperator() {
         return operator;
     }
 
     public ExpressionNode getRight() {
         return right;
     }
+    public void setLeft(ExpressionNode left) {
+        this.left = left;
+    }
+
+    public void setOperator(OperatorExpressionNode operator) {
+        this.operator = operator;
+    }
+
+    public void setRight(ExpressionNode right) {
+        this.right = right;
+    }
+
+
 }

@@ -2,6 +2,8 @@ package org.example.MainCode.SQLIntepreter;
 
 import org.example.MainCode.SQLIntepreter.DataTypes.DataTypeNode;
 import org.example.MainCode.SQLIntepreter.Expression.*;
+import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.AdditionExpressionNode;
+import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.SubtractionExpressionNode;
 import org.example.MainCode.SQLIntepreter.Statements.SelectStatement;
 import org.example.MainCode.SQLIntepreter.clauses.FromClause;
 import org.example.MainCode.SQLIntepreter.clauses.SelectClause;
@@ -29,5 +31,8 @@ public interface AstVisitor<R> {
 
     R visitColumnNode(ColumnNode columnNode);
 
-    void visitExpressionNode(ExpressionNode expressionNode);
+
+    R visitAdditionExpressionNode(AdditionExpressionNode additionExpressionNode);
+
+    R visitSubtractionExpressionNode(SubtractionExpressionNode subtractionExpressionNode);
 }

@@ -1,12 +1,18 @@
 package org.example.MainCode.SQLIntepreter;
 
 import org.example.MainCode.SQLIntepreter.Statements.SelectStatement;
+import org.example.MainCode.SQLIntepreter.Statements.Statement;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SQLParser {
     private final List<Token> tokens;
     private int pos = 0;
+
+    private List<Statement> query = new ArrayList<>();
+    private List<Objects> query2 = new ArrayList<>();
 
     public SQLParser(List<Token> tokens) {
         this.tokens = tokens;
@@ -18,6 +24,22 @@ public class SQLParser {
         }
     }
 
+    public List<Statement> parseTwo(){
+        while (pos < tokens.size()){
+            addNodes();
+        }
+        return null;
+    }
+
+    private void addNodes() {
+        Token t = tokens.get(pos);
+        while (true){
+
+        }
+
+
+    }
+
     public SelectStatement parseSelect(){
 
         return null;
@@ -26,9 +48,20 @@ public class SQLParser {
 
 
     private Token consume(){
-        Token t = peek(pos);
+        Token t = peek();
         pos++;
         return t;
+    }
+
+
+    private Token expect(List<TokenType> tokenTypes){
+        Token t = peek();
+        for (TokenType token: tokenTypes){
+            if (t.type == token){
+                return consume();
+            }
+        }
+        throw new RuntimeException("Unexpected tokentype, found:  " + t);
     }
 
 
@@ -36,16 +69,16 @@ public class SQLParser {
 
 
     private Token expect(TokenType tokenType) {
-        Token t = peek(pos);
+        Token t = peek();
         if (t.type != tokenType){
             throw new RuntimeException("Expected " + tokenType + " but found " + t);
         }
         return consume();
     }
 
-    private Token peek(int i){
-        if (i >= tokens.size()) return tokens.get(tokens.size() - 1);
-        return tokens.get(i);
+    private Token peek(){
+        if (pos + 1 >= tokens.size()) return tokens.get(tokens.size() - 1);
+        return tokens.get(pos + 1);
     }
 
     public static String getStringType(TokenType type) {

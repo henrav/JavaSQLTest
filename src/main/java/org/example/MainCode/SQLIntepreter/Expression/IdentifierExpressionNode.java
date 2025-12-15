@@ -2,7 +2,7 @@ package org.example.MainCode.SQLIntepreter.Expression;
 
 import org.example.MainCode.SQLIntepreter.AstVisitor;
 
-public class IdentifierExpressionNode implements ExpressionNode {
+public class IdentifierExpressionNode extends ExpressionNode {
     private final String name;
     public IdentifierExpressionNode(String name) { this.name = name; }
     public String getName() { return name; }

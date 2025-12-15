@@ -3,7 +3,7 @@ package org.example.MainCode.SQLIntepreter.Expression;
 
 import org.example.MainCode.SQLIntepreter.AstVisitor;
 
-public class NumberLiteralNode implements ExpressionNode {
+public class NumberLiteralNode extends ExpressionNode {
     private final double value;
     public NumberLiteralNode(double value) { this.value = value; }
     public double getValue() { return value; }
