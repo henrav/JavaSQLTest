@@ -2,12 +2,11 @@ package org.example.MainCode.SQLIntepreter;
 
 import org.example.MainCode.SQLIntepreter.DataTypes.DataTypeNode;
 import org.example.MainCode.SQLIntepreter.Expression.*;
-import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.AdditionExpressionNode;
-import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.SubtractionExpressionNode;
+import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.AdditionExpression;
+import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.SubtractionExpression;
 import org.example.MainCode.SQLIntepreter.Statements.SelectStatement;
 import org.example.MainCode.SQLIntepreter.clauses.FromClause;
 import org.example.MainCode.SQLIntepreter.clauses.SelectClause;
-import org.example.MainCode.SQLIntepreter.clauses.WhereClause;
 
 public class AstWalkerPrinter implements AstVisitor{
     @Override
@@ -21,7 +20,7 @@ public class AstWalkerPrinter implements AstVisitor{
     }
 
     @Override
-    public Object visitWhereClause(WhereClause whereClause) {
+    public Object visitWhereClause(WhereExpression whereClause) {
         return null;
     }
 
@@ -31,17 +30,17 @@ public class AstWalkerPrinter implements AstVisitor{
     }
 
     @Override
-    public Object visitBinaryExpressionNode(BinaryExpressionNode binaryExpressionNode) {
+    public Object visitBinaryExpressionNode(BinaryExpression binaryExpressionNode) {
         return null;
     }
 
     @Override
-    public Object visitNumberLiteralNode(NumberLiteralNode numberLiteralNode) {
+    public Object visitNumberLiteralNode(NumberLiteralExpression numberLiteralNode) {
         return null;
     }
 
     @Override
-    public Object visitIdentifierExpressionNode(IdentifierExpressionNode identifierExpressionNode) {
+    public Object visitIdentifierExpressionNode(IdentifierExpression identifierExpressionNode) {
         return null;
     }
 
@@ -51,23 +50,23 @@ public class AstWalkerPrinter implements AstVisitor{
     }
 
     @Override
-    public Object visitStringLiteralNode(StringLiteralNode stringLiteralNode) {
+    public Object visitStringLiteralNode(StringLiteralExpression stringLiteralNode) {
         return null;
     }
 
     @Override
-    public Object visitColumnNode(ColumnNode columnNode) {
+    public Object visitColumnNode(SelectItem columnNode) {
         return null;
     }
 
 
     @Override
-    public Object visitAdditionExpressionNode(AdditionExpressionNode additionExpressionNode) {
+    public Object visitAdditionExpressionNode(AdditionExpression additionExpressionNode) {
         return null;
     }
 
     @Override
-    public Object visitSubtractionExpressionNode(SubtractionExpressionNode subtractionExpressionNode) {
+    public Object visitSubtractionExpressionNode(SubtractionExpression subtractionExpressionNode) {
         return null;
     }
 }

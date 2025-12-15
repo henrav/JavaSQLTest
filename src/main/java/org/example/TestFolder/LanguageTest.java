@@ -25,7 +25,7 @@ public class LanguageTest {
     @Test
     @Order(2)
     public void test4(){
-        String minSträng = "SELECT * , (minkolumn from users WHERE id > 4 ";
+        String minSträng = "SELECT * , COUNT(id.minkolumn) as hej from users WHERE id > 4 ";
         SQLParser parser = new SQLParser(new TokenGenerator(minSträng).tokenize());
         parser.parse();
         System.out.println("\n");
@@ -33,10 +33,8 @@ public class LanguageTest {
     @Test
     @Order(3)
     public void test5(){
-        String minSträng = "SELECT tjena, minkolumn from users WHERE id > 4 ";
-        SQLParser parser = new SQLParser(new TokenGenerator(minSträng).tokenize());
-        parser.parse();
-        System.out.println("\n");
+
+
     }
     @Test
     public void test3(){

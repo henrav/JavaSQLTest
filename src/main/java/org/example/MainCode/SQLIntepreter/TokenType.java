@@ -10,5 +10,10 @@ public enum TokenType{
     NUMBER,
     STRING,
     OPERATOR,
+    LPAREN,
+    RPAREN,
+    ALIAS,
+    DOT,
+    JOIN,
     EOF
 }

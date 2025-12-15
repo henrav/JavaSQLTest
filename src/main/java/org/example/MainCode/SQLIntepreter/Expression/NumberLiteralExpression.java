@@ -3,9 +3,9 @@ package org.example.MainCode.SQLIntepreter.Expression;
 
 import org.example.MainCode.SQLIntepreter.AstVisitor;
 
-public class NumberLiteralNode extends ExpressionNode {
+public class NumberLiteralExpression extends Expression {
     private final double value;
-    public NumberLiteralNode(double value) { this.value = value; }
+    public NumberLiteralExpression(double value) { this.value = value; }
     public double getValue() { return value; }
 
     @Override

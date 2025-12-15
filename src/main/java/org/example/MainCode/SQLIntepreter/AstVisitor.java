@@ -2,37 +2,42 @@ package org.example.MainCode.SQLIntepreter;
 
 import org.example.MainCode.SQLIntepreter.DataTypes.DataTypeNode;
 import org.example.MainCode.SQLIntepreter.Expression.*;
-import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.AdditionExpressionNode;
-import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.SubtractionExpressionNode;
+import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.AdditionExpression;
+import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.SubtractionExpression;
+import org.example.MainCode.SQLIntepreter.Expression.Logical.AndExpression;
+import org.example.MainCode.SQLIntepreter.Expression.Logical.OrExpression;
 import org.example.MainCode.SQLIntepreter.Statements.SelectStatement;
 import org.example.MainCode.SQLIntepreter.clauses.FromClause;
 import org.example.MainCode.SQLIntepreter.clauses.SelectClause;
-import org.example.MainCode.SQLIntepreter.clauses.WhereClause;
 
 public interface AstVisitor<R> {
     R visitSelectClause(SelectClause node);
 
     R visitFromClause(FromClause fromClause);
 
-    R visitWhereClause(WhereClause whereClause);
+    R visitWhereClause(WhereExpression whereClause);
 
     R visitDataTypeNode(DataTypeNode dataTypeNode);
 
-    R visitBinaryExpressionNode(BinaryExpressionNode binaryExpressionNode);
+    R visitBinaryExpressionNode(BinaryExpression binaryExpressionNode);
 
 
-    R visitNumberLiteralNode(NumberLiteralNode numberLiteralNode);
+    R visitNumberLiteralNode(NumberLiteralExpression numberLiteralNode);
 
-    R visitIdentifierExpressionNode(IdentifierExpressionNode identifierExpressionNode);
+    R visitIdentifierExpressionNode(IdentifierExpression identifierExpressionNode);
 
     R visitSelectStatement(SelectStatement selectStatement);
 
-    R visitStringLiteralNode(StringLiteralNode stringLiteralNode);
+    R visitStringLiteralNode(StringLiteralExpression stringLiteral);
 
-    R visitColumnNode(ColumnNode columnNode);
+    R visitColumnNode(SelectItem columnNode);
 
 
-    R visitAdditionExpressionNode(AdditionExpressionNode additionExpressionNode);
+    R visitAdditionExpressionNode(AdditionExpression additionExpressionNode);
 
-    R visitSubtractionExpressionNode(SubtractionExpressionNode subtractionExpressionNode);
+    R visitSubtractionExpressionNode(SubtractionExpression subtractionExpressionNode);
+
+    R visitAndExpression(AndExpression andExpression);
+
+    R visitOrExpression(OrExpression orExpression);
 }

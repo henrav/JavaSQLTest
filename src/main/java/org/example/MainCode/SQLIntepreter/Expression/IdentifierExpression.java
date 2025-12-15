@@ -2,9 +2,9 @@ package org.example.MainCode.SQLIntepreter.Expression;
 
 import org.example.MainCode.SQLIntepreter.AstVisitor;
 
-public class IdentifierExpressionNode extends ExpressionNode {
+public class IdentifierExpression extends Expression {
     private final String name;
-    public IdentifierExpressionNode(String name) { this.name = name; }
+    public IdentifierExpression(String name) { this.name = name; }
     public String getName() { return name; }
 
     @Override

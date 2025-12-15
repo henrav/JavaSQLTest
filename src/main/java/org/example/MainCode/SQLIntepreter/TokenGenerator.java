@@ -28,6 +28,9 @@ public class TokenGenerator {
 
         if (c == ',') { pos++; return new Token(TokenType.COMMA, ","); }
         if (c == '*') { pos++; return new Token(TokenType.ALL, "*"); }
+        if (c == '(') { pos++; return new Token(TokenType.LPAREN, "(");}
+        if (c == ')') { pos++; return new Token(TokenType.RPAREN, ")");}
+        if (c == '.') { pos++; return new Token(TokenType.DOT, ".");}
 
         if (Character.isDigit(c)) return numberToken();
         if (c == '\'')   return stringToken();
@@ -49,6 +52,7 @@ public class TokenGenerator {
             case "SELECT" -> new Token(TokenType.SELECT, text);
             case "FROM" -> new Token(TokenType.FROM, text);
             case "WHERE" -> new Token(TokenType.WHERE, text);
+            case "AS" -> new Token(TokenType.ALIAS, text);
             default -> new Token(TokenType.IDENTIFIER, text);
         };
     }
