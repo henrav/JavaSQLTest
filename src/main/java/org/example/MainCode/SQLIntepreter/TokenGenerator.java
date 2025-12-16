@@ -7,12 +7,13 @@ public class TokenGenerator {
     private final String input;
     private int pos = 0;
 
+    private List<Token> tokens = new ArrayList<>();
+
     public TokenGenerator(String input){
         this.input = input;
     }
 
     public List<Token> tokenize(){
-        List<Token> tokens = new ArrayList<>();
         Token t;
         do {
             t = nextToken();
@@ -35,12 +36,35 @@ public class TokenGenerator {
         if (Character.isDigit(c)) return numberToken();
         if (c == '\'')   return stringToken();
         if (Character.isLetter(c) || c == '_') return identifierOrKeyword();
-        if ("=<>!".indexOf(c) >= 0) {
-            pos++;
-            return new Token(TokenType.OPERATOR, String.valueOf(c));
-        }
+        if ("=<>!".indexOf(c) >= 0) return operatorToken();
         pos++;
-        return new Token(TokenType.IDENTIFIER, String.valueOf(c));
+        throw new IllegalArgumentException("Unsupported operator: " + c);
+    }
+
+    private Token operatorToken() {
+        char c = input.charAt(pos);
+        char next = (pos + 1 < input.length()) ? input.charAt(pos + 1) : '\0';
+
+
+        if (c == '<') {
+            if (next == '=') { pos += 2;return new Token(TokenType.OPERATOR, "<="); }
+            if (next == '>') { pos += 2; return new Token(TokenType.OPERATOR, "<>"); }
+            pos ++; return new Token(TokenType.OPERATOR, "<");
+        }
+
+        if (c == '>') {
+            if (next == '=') { pos += 2; return new Token(TokenType.OPERATOR, ">="); }
+            pos ++; return new Token(TokenType.OPERATOR, ">");
+        }
+
+        if (c == '!') {
+            if (next == '=') { pos += 2; return new Token(TokenType.OPERATOR, "!="); }
+            throw new IllegalArgumentException("Unsupported operator: !");
+        }
+
+        if (c == '=') { pos ++; return new Token(TokenType.OPERATOR, "="); }
+
+        throw new IllegalArgumentException("Unsupported operator: " + c);
     }
 
     private Token identifierOrKeyword() {
@@ -53,6 +77,7 @@ public class TokenGenerator {
             case "FROM" -> new Token(TokenType.FROM, text);
             case "WHERE" -> new Token(TokenType.WHERE, text);
             case "AS" -> new Token(TokenType.ALIAS, text);
+            case "AND", "OR" -> new Token(TokenType.OPERATOR, text);
             default -> new Token(TokenType.IDENTIFIER, text);
         };
     }

@@ -9,6 +9,10 @@ public class SubtractionExpression extends BinaryExpression {
         super(left, right);
     }
 
+    public SubtractionExpression() {
+        super();
+    }
+
     @Override
     public <R> R accept(AstVisitor<R> visitor) {
         return visitor.visitSubtractionExpressionNode(this);

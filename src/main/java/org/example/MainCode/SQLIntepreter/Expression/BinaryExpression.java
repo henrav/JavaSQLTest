@@ -11,6 +11,9 @@ public abstract class BinaryExpression extends Expression {
         this.left = left;
         this.right = right;
     }
+    public BinaryExpression() {
+
+    }
 
     @Override
     public <R> R accept(AstVisitor<R> visitor) {

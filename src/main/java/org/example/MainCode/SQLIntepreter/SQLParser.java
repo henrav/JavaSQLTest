@@ -1,7 +1,10 @@
 package org.example.MainCode.SQLIntepreter;
 
 import org.example.MainCode.SQLIntepreter.Expression.*;
+import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.AdditionExpression;
+import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.SubtractionExpression;
 import org.example.MainCode.SQLIntepreter.Expression.DataTypes.AllExpression;
+import org.example.MainCode.SQLIntepreter.Expression.Logical.*;
 import org.example.MainCode.SQLIntepreter.Statements.SelectStatement;
 import org.example.MainCode.SQLIntepreter.Statements.Statement;
 import org.example.MainCode.SQLIntepreter.clauses.FromClause;
@@ -18,7 +21,12 @@ public class SQLParser {
     private List<Object> query2 = new ArrayList<>();
 
     public SQLParser(List<Token> tokens) {
+
         this.tokens = tokens;
+    }
+
+    public SQLParser(String string){
+        this.tokens = new TokenGenerator(string).tokenize();
     }
 
     public void parse(){
@@ -63,30 +71,78 @@ public class SQLParser {
         SelectStatement statement = new SelectStatement();
         statement.columns = parseSelectList();
         statement.from =  parseFromList();
-        if (check(TokenType.WHERE)){
-            expect(TokenType.WHERE);
-            statement.where = parseWhereExpr();
+        if (match(TokenType.WHERE)){
+            statement.where = parseOr();
         }
         return statement;
     }
 
-    private Expression parseWhereExpr() {
 
-        return null;
+    Expression parseOr() {
+        Expression left = parseAnd();
+        while (check(TokenType.OPERATOR) && peek().text.equalsIgnoreCase("OR")) {
+            consume();
+            left = new OrExpression(left, parseAnd());
+        }
+        return left;
+    }
+
+    Expression parseAnd() {
+        Expression left = getExpressionFromToken();
+        while (check(TokenType.OPERATOR) && peek().text.equalsIgnoreCase("AND")) {
+            consume();
+            left = new AndExpression(left, getExpressionFromToken());
+        }
+        return left;
+    }
+
+
+    private Expression getExpressionFromToken() {
+        Expression left = parseValue();
+
+        Token t = expect(TokenType.OPERATOR);
+
+        Expression right = parseValue();
+
+
+        return switch (t.text) {
+            case "=" -> new ComparisonExpression(left, right);
+            case "+" -> new AdditionExpression(left, right);
+            case "-" -> new SubtractionExpression(left, right);
+            case "<" -> new LessThanExpression(left, right);
+            case ">" -> new GreaterThanExpression(left, right);
+            default -> throw new IllegalArgumentException("Unsupported operator: " + t.text);
+        };
+    }
+
+    private Expression parseValue() {
+        if (match(TokenType.NUMBER)) {
+            return new NumberLiteralExpression(previous().text);
+        }
+
+        Token t = expect(TokenType.IDENTIFIER);
+
+        if (match(TokenType.DOT)) {
+            Token col = expect(TokenType.IDENTIFIER);
+            return new ColumnExpression(t.text, col.text);
+        }
+
+        return new ColumnExpression(null, t.text);
+
     }
 
     public FromClause parseFromList(){
         expect(TokenType.FROM);
         FromClause fromClause = new FromClause();
         fromClause.tables = parseFromTables();
-        if (check(TokenType.JOIN)){
+        if (match(TokenType.JOIN)){
             fromClause.joins = parseJoinTables();
         }
-        return null;
+       return fromClause;
     }
 
     private List<JoinExpression> parseJoinTables() {
-        expect(TokenType.JOIN);
+
 
         return null;
     }
@@ -162,23 +218,40 @@ public class SQLParser {
 
 
 
+
+
     private boolean isAtEnd() {
         return pos >= tokens.size() || peek().type == TokenType.EOF;
     }
 
+
+    /**
+     *
+     * @return token at current pos
+     */
     private Token peek() {
         return (pos >= tokens.size()) ? null : tokens.get(pos);
     }
     private Token peekNext() { return (pos + 1 < tokens.size()) ? tokens.get(pos + 1) : tokens.get(tokens.size()-1); }
     private Token previous() { return tokens.get(pos - 1); }
 
+    /**
+     *
+     * @return returns current tokens increases counter
+     */
     private Token consume() {
-        Token t = peekNext();
+        Token t = peek();
         if (t == null) throw new RuntimeException("Tried to consume past end of tokens");
         pos++;
         return t;
     }
 
+
+    /**
+     * check if current token == param token. if true, consumes current token returns true; if false, returns false;
+     * @param type
+     * @return true or false
+     */
     private boolean match(TokenType type) {
         Token t = peek();
         if (t != null && t.type == type) {
@@ -188,6 +261,11 @@ public class SQLParser {
         return false;
     }
 
+    /**
+     * checks if current token == param token
+     * @param type
+     * @return true if param == current, false if param != current
+     */
     private boolean check(TokenType type){
         Token t = peek();
         return t != null && t.type == type;
@@ -198,6 +276,12 @@ public class SQLParser {
         return t.type == TokenType.FROM || t.type == TokenType.WHERE || t.type == TokenType.JOIN;
     }
 
+
+    /**
+     * checks if current token == param token. if true, then consume current token and pos ++;
+     * @param types
+     * @return next token
+     */
     private Token expect(TokenType... types) {
         Token t = peek();
         if (t == null) throw new RuntimeException("Unexpected end of input");

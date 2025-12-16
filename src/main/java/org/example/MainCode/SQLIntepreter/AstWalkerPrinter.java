@@ -4,15 +4,14 @@ import org.example.MainCode.SQLIntepreter.DataTypes.DataTypeNode;
 import org.example.MainCode.SQLIntepreter.Expression.*;
 import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.AdditionExpression;
 import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.SubtractionExpression;
+import org.example.MainCode.SQLIntepreter.Expression.Logical.*;
 import org.example.MainCode.SQLIntepreter.Statements.SelectStatement;
 import org.example.MainCode.SQLIntepreter.clauses.FromClause;
-import org.example.MainCode.SQLIntepreter.clauses.SelectClause;
 
 public class AstWalkerPrinter implements AstVisitor{
-    @Override
-    public Object visitSelectClause(SelectClause node) {
-        return null;
-    }
+
+
+
 
     @Override
     public Object visitFromClause(FromClause fromClause) {
@@ -67,6 +66,31 @@ public class AstWalkerPrinter implements AstVisitor{
 
     @Override
     public Object visitSubtractionExpressionNode(SubtractionExpression subtractionExpressionNode) {
+        return null;
+    }
+
+    @Override
+    public Object visitAndExpression(AndExpression andExpression) {
+        return null;
+    }
+
+    @Override
+    public Object visitOrExpression(OrExpression orExpression) {
+        return null;
+    }
+
+    @Override
+    public Object visitGreaterThanExpression(GreaterThanExpression greaterThanExpression) {
+        return null;
+    }
+
+    @Override
+    public Object visitLessThanExpression(LessThanExpression lessThanExpression) {
+        return null;
+    }
+
+    @Override
+    public Object visitComparisonExpression(ComparisonExpression comparisonExpression) {
         return null;
     }
 }

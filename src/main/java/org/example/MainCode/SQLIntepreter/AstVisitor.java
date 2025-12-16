@@ -4,14 +4,12 @@ import org.example.MainCode.SQLIntepreter.DataTypes.DataTypeNode;
 import org.example.MainCode.SQLIntepreter.Expression.*;
 import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.AdditionExpression;
 import org.example.MainCode.SQLIntepreter.Expression.Arithmetic.SubtractionExpression;
-import org.example.MainCode.SQLIntepreter.Expression.Logical.AndExpression;
-import org.example.MainCode.SQLIntepreter.Expression.Logical.OrExpression;
+import org.example.MainCode.SQLIntepreter.Expression.Logical.*;
 import org.example.MainCode.SQLIntepreter.Statements.SelectStatement;
 import org.example.MainCode.SQLIntepreter.clauses.FromClause;
-import org.example.MainCode.SQLIntepreter.clauses.SelectClause;
 
 public interface AstVisitor<R> {
-    R visitSelectClause(SelectClause node);
+
 
     R visitFromClause(FromClause fromClause);
 
@@ -40,4 +38,10 @@ public interface AstVisitor<R> {
     R visitAndExpression(AndExpression andExpression);
 
     R visitOrExpression(OrExpression orExpression);
+
+    R visitGreaterThanExpression(GreaterThanExpression greaterThanExpression);
+
+    R visitLessThanExpression(LessThanExpression lessThanExpression);
+
+    R visitComparisonExpression(ComparisonExpression comparisonExpression);
 }

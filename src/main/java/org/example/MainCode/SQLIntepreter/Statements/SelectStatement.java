@@ -13,6 +13,8 @@ public class SelectStatement extends Statement {
     public List<SelectItem> columns = new ArrayList<>();
     public FromClause from;
 
+    public  Expression where;
+
     public void addColumn(SelectItem columnExpression){
         columns.add(columnExpression);
     }
@@ -27,7 +29,6 @@ public class SelectStatement extends Statement {
         this.where = where;
     }
 
-    public  Expression where;
 
     public SelectStatement(){}
 

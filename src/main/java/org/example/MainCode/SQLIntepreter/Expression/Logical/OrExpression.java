@@ -8,6 +8,11 @@ public class OrExpression extends BinaryExpression {
     public OrExpression(Expression left, Expression right) {
         super(left, right);
     }
+
+    public OrExpression() {
+        super();
+    }
+
     @Override
     public <R> R accept(AstVisitor<R> visitor) {
         return visitor.visitOrExpression(this);
